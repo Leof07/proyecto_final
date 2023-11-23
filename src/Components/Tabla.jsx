@@ -7,7 +7,7 @@ function Tabla({headers,controlador, lista}) {
         <thead className="table-dark">
             <tr>
               <th>
-                  <Link to={`/${controlador}/new`} className="btn btn-success">Nuevo</Link>
+                  <Link to={`/${controlador}/add`} className="btn btn-success">Nuevo</Link>
               </th>
                 {headers.map((header,index) => (<th key={index} scope="col">{header}</th>))}
             </tr>

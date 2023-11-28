@@ -22,7 +22,6 @@ function CelularesCrud({api}) {
     }
     return(
         <div>
-            <h1>Celulares</h1>
             {
                 celulares===undefined?
                 <div className="spinner-border" role="status">

@@ -16,6 +16,8 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/celulares" element={<CelularesCrud api={APICelulares}/>}/>
                 <Route path="/celulares/add" element={<FormularioCelular api={APICelulares}/>}/>
+                <Route path="/celulares/editar/:id" element={<FormularioCelular api={APICelulares}/>}/>
+                <Route path="celulares/eliminar/:id" element={<FormularioCelular api={APICelulares} del={true}/>}/>
                 <Route path="/juegos" element={<JuegosCrud/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

@@ -18,7 +18,7 @@ function Tabla({headers,controlador, lista}) {
               <tr key={index}>
                 <td>
                   <Link to={`/${controlador}/editar/${Object.values(elemento)[0]}`} className="btn btn-primary">Edit</Link>
-                  <Link to={`/${controlador}/elimianr/${Object.values(elemento)[0]}`} className="btn btn-danger">Delete</Link>
+                  <Link to={`/${controlador}/eliminar/${Object.values(elemento)[0]}`} className="btn btn-danger">Delete</Link>
                 </td>
                 {
                 Object.values(elemento).map((valor,index) => (<td key={index}>{valor}</td>))

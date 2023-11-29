@@ -7,7 +7,7 @@ function Tabla({headers,controlador, lista}) {
         <thead className="table-dark">
             <tr>
               <th>
-                  <Link to={`/${controlador}/add`} className="btn btn-success">Nuevo</Link>
+                  <Link to={`/${controlador}/add`} className="btn btn-success"><i className="fa-solid fa-plus"></i> Nuevo</Link>
               </th>
                 {headers.map((header,index) => (<th key={index} scope="col">{header}</th>))}
             </tr>
@@ -17,8 +17,8 @@ function Tabla({headers,controlador, lista}) {
             lista.map((elemento,index) => (
               <tr key={index}>
                 <td>
-                  <Link to={`/${controlador}/editar/${Object.values(elemento)[0]}`} className="btn btn-primary">Editar</Link>
-                  <Link to={`/${controlador}/eliminar/${Object.values(elemento)[0]}`} className="btn btn-danger">Eliminar</Link>
+                  <Link to={`/${controlador}/editar/${Object.values(elemento)[0]}`} className="btn btn-primary"><i className="fa-solid fa-pen-to-square"></i> Editar</Link>
+                  <Link to={`/${controlador}/eliminar/${Object.values(elemento)[0]}`} className="btn btn-danger"><i className="fa-solid fa-trash"></i> Eliminar</Link>
                 </td>
                 {
                 Object.values(elemento).map((valor,index) => (<td key={index}>{valor}</td>))

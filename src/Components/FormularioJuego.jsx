@@ -10,6 +10,7 @@ function FormularioJuego({api,del}) {
     const[categoria,setCategoria]=useState("")
     const navigate= useNavigate()
     const{id}=useParams()
+    const[validPrecio,setValidPrecio]=useState("")
     useEffect(()=>{
         if(id!==undefined)
         cargarJuego()
@@ -93,12 +94,26 @@ function FormularioJuego({api,del}) {
         }catch(err){
             alert(err)
             console.log(err)
-            if(err.response.status===500){
+            if(err.response.status===404){
                 alert("El juego ya no existe")
                 navigate("/juegos")
             }
         }
     }
+    //Validaciones
+    function validarPrecio(){
+        let expresionRegular=/^\d+(\.\d{1,2})?$/
+        const expr= new RegExp(expresionRegular)
+        let resultado=expr.test(precio)
+        if(!resultado){
+          setValidPrecio("is-invalid")
+        }
+        else{
+          setValidPrecio("")
+        }
+        return resultado
+      }
+
     function enviar(e){
         e.preventDefault()
         e.stopPropagation()
@@ -106,7 +121,7 @@ function FormularioJuego({api,del}) {
         if (!form.checkValidity()) {
             form.classList.add('was-validated')
     }
-    else{
+    else if(validarPrecio()===true){
         if(id===undefined){
             guardar()
         }
@@ -115,7 +130,13 @@ function FormularioJuego({api,del}) {
                 editar()
             }
             else{
-                eliminar()
+                let check= window.confirm("¿Estas seguro de eliminar el juego?")
+                if(check){
+                    eliminar()
+                }
+                else{
+                    navigate("/juegos")
+                }
             }
         }
     }
@@ -152,9 +173,9 @@ function FormularioJuego({api,del}) {
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Precio:</label>
-                    <input type="text" className="form-control" value={precio} onChange={(e)=>{setPrecio(e.target.value)}} required disabled={del===undefined?false:true}></input>
+                    <input type="text" className={`form-control ${validPrecio}`} value={precio} onKeyUp={validarPrecio} onChange={(e)=>{setPrecio(e.target.value)}} required disabled={del===undefined?false:true}></input>
                     <div className="valid-feedback">Correcto</div>
-                    <div className="invalid-feedback">Campo requerido</div>
+                    <div className="invalid-feedback">El precio solo puede ser un numero entero # o un entero con dos decimales #.##</div>
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Categoria:</label>
@@ -162,8 +183,8 @@ function FormularioJuego({api,del}) {
                     <div className="valid-feedback">Correcto</div>
                     <div className="invalid-feedback">Campo requerido</div>
                 </div>
-                <button className={`btn btn-${id===undefined?"success": del===undefined?"primary":"danger"} mt-3`} onClick={(e)=>{enviar(e)}}>{id===undefined?"Guardar": del===undefined?"Editar":"Eliminar"}</button>
-                <button className="btn btn-warning mt-3 ms-2" onClick={()=>{navigate("/juegos")}}>Cancelar</button>
+                <button className={`btn btn-${id===undefined?"success": del===undefined?"primary":"danger"} mt-3`} onClick={(e)=>{enviar(e)}}><i className={`${id===undefined?"fa-solid fa-floppy-disk": del===undefined?"fa-solid fa-pen-to-square":"fa-solid fa-trash"}`}></i>{id===undefined?" Guardar": del===undefined?" Editar":" Eliminar"}</button>
+                <button className="btn btn-warning mt-3 ms-2" onClick={()=>{navigate("/juegos")}}><i class="fa-solid fa-ban"></i>{" "}Cancelar</button>
             </form>
         </div>
     )

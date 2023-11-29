@@ -11,6 +11,10 @@ function FormularioCelular({ api,del}) {
   const [operadora, setOperadora] = useState("");
   const navigate = useNavigate();
   const{id}=useParams()
+  const[validMarca, setValidMarca] = useState("")
+  const[validColor, setValidColor]=useState("")
+  const[validPrecio, setValidPrecio]=useState("")
+  const[validOperadora, setValidOperadora]=useState("")
 
 useEffect(()=>{
   if(id!==undefined){
@@ -110,7 +114,55 @@ useEffect(()=>{
       }
     }
   }
-
+//Validaciones
+  function validarMarca(){
+    let expresionRegular=/^[a-zA-ZáéíóúüñÁÉÍÓÚÜ\s]+$/
+    const expr= new RegExp(expresionRegular)
+    let resultado=expr.test(marca)
+    if(!resultado){
+      setValidMarca("is-invalid")
+    }
+    else{
+      setValidMarca("")
+    }
+    return resultado
+  }
+  function validarColor(){
+    let expresionRegular=/^[a-zA-ZáéíóúüñÁÉÍÓÚÜ\s,]+$/
+    const expr= new RegExp(expresionRegular)
+    let resultado=expr.test(color)
+    if(!resultado){
+      setValidColor("is-invalid")
+    }
+    else{
+      setValidColor("")
+    }
+    return resultado
+  }
+  function validarPrecio(){
+    let expresionRegular=/^\d+(\.\d{1,2})?$/
+    const expr= new RegExp(expresionRegular)
+    let resultado=expr.test(precio)
+    if(!resultado){
+      setValidPrecio("is-invalid")
+    }
+    else{
+      setValidPrecio("")
+    }
+    return resultado
+  }
+  function validarOperadora(){
+    let expresionRegular=/^[a-zA-ZáéíóúüñÁÉÍÓÚÜ\s,]+$/
+    const expr= new RegExp(expresionRegular)
+    let resultado=expr.test(operadora)
+    if(!resultado){
+      setValidOperadora("is-invalid")
+    }
+    else{
+      setValidOperadora("")
+    }
+    return resultado
+  }
   function enviar(event){
     event.preventDefault()
     event.stopPropagation()
@@ -118,23 +170,22 @@ useEffect(()=>{
     if (!form.checkValidity()) {
         form.classList.add('was-validated')
     }
-    else{
+    else if(validarMarca()===true&&validarColor()===true&&validarPrecio()===true&&validarOperadora()===true){
         if(id===undefined){
           Guardar()
-        }else
-        if(del===undefined){
-          editar()
-        }
-        else
-        {
-          let respuesta=window.confirm("¿Estas seguro que deseas eliminar el celular?")
+          }else if(!del===true){
+            editar()
+          }
+          else
+          {
+            let respuesta=window.confirm("¿Estas seguro que deseas eliminar el celular?")
                 if(respuesta===true){
                     eliminar()
                 }
                 else{
                     navigate("/celulares")
                 } 
-        }
+          }
     }
 }
   return (
@@ -153,7 +204,8 @@ useEffect(()=>{
           <label className="form-label">Marca:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${validMarca}`}
+            onKeyUp={validarMarca}
             value={marca}
             onChange={(e) => {
               setMarca(e.target.value);
@@ -164,7 +216,7 @@ useEffect(()=>{
             }
           />
           <div className="valid-feedback">Correcto</div>
-          <div className="invalid-feedback">Campo requerido</div>
+          <div className="invalid-feedback">El campo solo debe contener letras</div>
         </div>
         <div className="form-group mt-2">
           <label className="form-label">Modelo:</label>
@@ -187,7 +239,8 @@ useEffect(()=>{
           <label className="form-label">Color:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${validColor}`}
+            onKeyUp={validarColor}
             value={color}
             onChange={(e) => {
               setColor(e.target.value);
@@ -198,14 +251,15 @@ useEffect(()=>{
             }
           />
           <div className="valid-feedback">Correcto</div>
-          <div className="invalid-feedback">Campo requerido</div>
+          <div className="invalid-feedback">El campo no debe contener numeros ni caracteres especiales</div>
         </div>
         <div className="form-group mt-2">
           <label className="form-label">Precio:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${validPrecio}`}
             value={precio}
+            onKeyUp={validarPrecio}
             onChange={(e) => {
               setPrecio(e.target.value);
             }}
@@ -215,7 +269,7 @@ useEffect(()=>{
             }
           />
           <div className="valid-feedback">Correcto</div>
-          <div className="invalid-feedback">Campo requerido</div>
+          <div className="invalid-feedback">El campo solo permite numeros enteros # o numeros con dos decimales #.##</div>
         </div>
         <div className="form-group mt-2">
           <label className="form-label">Descripcion:</label>
@@ -238,8 +292,9 @@ useEffect(()=>{
           <label className="form-label">Operadora:</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${validOperadora}`}
             value={operadora}
+            onKeyUp={validarOperadora}
             onChange={(e) => {
               setOperadora(e.target.value);
             }}
@@ -249,24 +304,26 @@ useEffect(()=>{
             }
           />
           <div className="valid-feedback">Correcto</div>
-          <div className="invalid-feedback">Campo requerido</div>
+          <div className="invalid-feedback">El campo solo permite letras y comas (,) para separar operadoras</div>
         </div>
         <button className={`btn btn-${id===undefined?"success" : del===true ?"danger":"primary"} mt-3`} onClick={(e) => enviar(e)}>
+          <i className={`${id===undefined?"fa-solid fa-floppy-disk": del===undefined?"fa-solid fa-pen-to-square":"fa-solid fa-trash"}`}></i>
           {
             id===undefined?
-            "Guardar"
+            " Guardar"
             :
             del===true?
-            "Eliminar"
+            " Eliminar"
             :
-            "Editar"
+            " Editar"
           }
         </button>
         <button
           className="btn btn-warning mt-3 ms-2"
           onClick={() => navigate("/celulares")}
         >
-          Cancelar
+          <i class="fa-solid fa-ban"></i>{" "}
+         Cancelar
         </button>
       </form>
     </div>

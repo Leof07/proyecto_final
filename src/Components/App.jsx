@@ -7,6 +7,7 @@ import CelularesCrud from "./CelularesCrud";
 import JuegosCrud from "./JuegosCrud";
 import FormularioCelular from "./FormularioCelular";
 import FormularioJuego from "./FormularioJuego";
+import Footer from "./Footer";
 function App() {
     const[APICelulares,SetAPICelulares]=useState("https://denny2023.azurewebsites.net/api/celulares")
     const[APIJuegos,SetAPIJuegos]=useState("https://denny2023.azurewebsites.net/api/juegos")
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/juegos/eliminar/:id" element={<FormularioJuego api={APIJuegos} del={true}/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
+            <Footer />
             </BrowserRouter>
         </div>
     )

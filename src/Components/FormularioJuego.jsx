@@ -11,6 +11,9 @@ function FormularioJuego({api,del}) {
     const navigate= useNavigate()
     const{id}=useParams()
     const[validPrecio,setValidPrecio]=useState("")
+    const [validCategoria, setValidCategoria]=useState("")
+    const[validPlataforma,setValidPlataforma]=useState("")
+    const[validTitulo,setValidTitulo]=useState("")
     useEffect(()=>{
         if(id!==undefined)
         cargarJuego()
@@ -106,14 +109,50 @@ function FormularioJuego({api,del}) {
         const expr= new RegExp(expresionRegular)
         let resultado=expr.test(precio)
         if(!resultado){
-          setValidPrecio("is-invalid")
+            setValidPrecio("is-invalid")
         }
         else{
-          setValidPrecio("")
+            setValidPrecio("")
         }
         return resultado
-      }
+    }
 
+    function validarCategoria(){
+        let expresionRegular=/^[a-zA-ZáéíóúüñÁÉÍÓÚÜ\s,]+$/
+        const expr= new RegExp(expresionRegular)
+        let resultado=expr.test(categoria)
+        if(!resultado){
+            setValidCategoria("is-invalid")
+        }
+        else{
+            setValidCategoria("")
+        }
+        return resultado
+    }
+    function validarPlataforma(){
+        let expresionRegular=/^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s\d,]+$/
+        const expr= new RegExp(expresionRegular)
+        let resultado=expr.test(plataforma)
+        if(!resultado){
+            setValidPlataforma("is-invalid")
+        }
+        else{
+            setValidPlataforma("")
+        }
+        return resultado
+    }
+    function validarTitulo(){
+        let expresionRegular=/^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s\d]+$/
+        const expr= new RegExp(expresionRegular)
+        let resultado=expr.test(titulo)
+        if(!resultado){
+            setValidTitulo("is-invalid")
+        }
+        else{
+            setValidTitulo("")
+        }
+        return resultado
+    }
     function enviar(e){
         e.preventDefault()
         e.stopPropagation()
@@ -121,7 +160,7 @@ function FormularioJuego({api,del}) {
         if (!form.checkValidity()) {
             form.classList.add('was-validated')
     }
-    else if(validarPrecio()===true){
+    else if(validarPrecio()===true&&validarCategoria()===true&&validarPlataforma()===true&&validarTitulo()===true){
         if(id===undefined){
             guardar()
         }
@@ -155,9 +194,9 @@ function FormularioJuego({api,del}) {
                 }
                 <div className="form-group mt-3">
                     <label className="form-label">Titulo:</label>
-                    <input type="text" className="form-control" value={titulo} onChange={(e)=>{setTitulo(e.target.value)}} required disabled={del===undefined?false:true}></input>
+                    <input type="text" className={`form-control ${validTitulo}`} value={titulo} onKeyUp={validarTitulo} onChange={(e)=>{setTitulo(e.target.value)}} required disabled={del===undefined?false:true}></input>
                     <div className="valid-feedback">Correcto</div>
-                    <div className="invalid-feedback">Campo requerido</div>
+                    <div className="invalid-feedback">Campo requerido, solo permite letras y numeros sin ningun carcater especial</div>
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Descripción:</label>
@@ -167,9 +206,9 @@ function FormularioJuego({api,del}) {
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Plataforma:</label>
-                    <input type="text" className="form-control" value={plataforma} onChange={(e)=>{setPlataforma(e.target.value)}} required disabled={del===undefined?false:true}></input>
+                    <input type="text" className={`form-control ${validPlataforma}`} value={plataforma} onKeyUp={validarPlataforma} onChange={(e)=>{setPlataforma(e.target.value)}} required disabled={del===undefined?false:true}></input>
                     <div className="valid-feedback">Correcto</div>
-                    <div className="invalid-feedback">Campo requerido</div>
+                    <div className="invalid-feedback">Campo obligatorio, solo se permiten letras y numeros, además de comas(,) para separar las plataformas</div>
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Precio:</label>
@@ -179,9 +218,9 @@ function FormularioJuego({api,del}) {
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Categoria:</label>
-                    <input type="text" className="form-control" value={categoria} onChange={(e)=>{setCategoria(e.target.value)}} required disabled={del===undefined?false:true}></input>
+                    <input type="text" className={`form-control ${validCategoria}`} value={categoria} onKeyUp={validarCategoria} onChange={(e)=>{setCategoria(e.target.value)}} required disabled={del===undefined?false:true}></input>
                     <div className="valid-feedback">Correcto</div>
-                    <div className="invalid-feedback">Campo requerido</div>
+                    <div className="invalid-feedback">El campo es obligatorio y solo permite letra y comas (,) para separar las categorias</div>
                 </div>
                 <button className={`btn btn-${id===undefined?"success": del===undefined?"primary":"danger"} mt-3`} onClick={(e)=>{enviar(e)}}><i className={`${id===undefined?"fa-solid fa-floppy-disk": del===undefined?"fa-solid fa-pen-to-square":"fa-solid fa-trash"}`}></i>{id===undefined?" Guardar": del===undefined?" Editar":" Eliminar"}</button>
                 <button className="btn btn-warning mt-3 ms-2" onClick={()=>{navigate("/juegos")}}><i class="fa-solid fa-ban"></i>{" "}Cancelar</button>

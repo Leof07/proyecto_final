@@ -12,21 +12,23 @@ function App() {
     const[APICelulares,SetAPICelulares]=useState("https://denny2023.azurewebsites.net/api/celulares")
     const[APIJuegos,SetAPIJuegos]=useState("https://denny2023.azurewebsites.net/api/juegos")
     return(
-        <div>
+        <div className="main">
             <BrowserRouter>
             <Header />
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/celulares" element={<CelularesCrud api={APICelulares}/>}/>
-                <Route path="/celulares/add" element={<FormularioCelular api={APICelulares}/>}/>
-                <Route path="/celulares/editar/:id" element={<FormularioCelular api={APICelulares}/>}/>
-                <Route path="celulares/eliminar/:id" element={<FormularioCelular api={APICelulares} del={true}/>}/>
-                <Route path="/juegos" element={<JuegosCrud api={APIJuegos}/>}/>
-                <Route path="/juegos/add" element={<FormularioJuego api={APIJuegos}/>}/>
-                <Route path="/juegos/editar/:id" element={<FormularioJuego api={APIJuegos}/>}/>
-                <Route path="/juegos/eliminar/:id" element={<FormularioJuego api={APIJuegos} del={true}/>}/>
-                <Route path="*" element={<NotFound/>}/>
+            <div className="main-container">
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/celulares" element={<CelularesCrud api={APICelulares}/>}/>
+                    <Route path="/celulares/add" element={<FormularioCelular api={APICelulares}/>}/>
+                    <Route path="/celulares/editar/:id" element={<FormularioCelular api={APICelulares}/>}/>
+                    <Route path="celulares/eliminar/:id" element={<FormularioCelular api={APICelulares} del={true}/>}/>
+                    <Route path="/juegos" element={<JuegosCrud api={APIJuegos}/>}/>
+                    <Route path="/juegos/add" element={<FormularioJuego api={APIJuegos}/>}/>
+                    <Route path="/juegos/editar/:id" element={<FormularioJuego api={APIJuegos}/>}/>
+                    <Route path="/juegos/eliminar/:id" element={<FormularioJuego api={APIJuegos} del={true}/>}/>
+                    <Route path="*" element={<NotFound/>}/>
             </Routes>
+            </div>
             <Footer />
             </BrowserRouter>
         </div>

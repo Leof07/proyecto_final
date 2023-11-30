@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 function Header() {
   return (
     <nav className="navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark">
-      <div className="container-fluid">
+      <div className="container">
         <Link to={"/"} className="navbar-brand">
           <img
             src="/tienda.png"

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Tabla from "./Tabla";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function CelularesCrud({api}) {
 
@@ -21,14 +22,14 @@ function CelularesCrud({api}) {
         }
     }
     return(
-        <div>
+        <div className="container">
             {
                 celulares===undefined?
                 <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
                 :
-                <Tabla lista={celulares}controlador="celulares" headers={["Id","Marca","Modelo","Color","Precio", "Descripción","Operadora"]} ></Tabla>
+                <Tabla lista={celulares}controlador="celulares" titulo="Celulares" headers={["Id","Marca","Modelo","Color","Precio", "Descripción","Operadora"]} ></Tabla>
             }
         </div>
     )

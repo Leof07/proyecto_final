@@ -181,7 +181,7 @@ function FormularioJuego({api,del}) {
     }
 }
     return(
-        <div >
+        <div className="container" >
             <form className="need-validation" noValidate>
                 {
                     id!==undefined?
@@ -223,7 +223,7 @@ function FormularioJuego({api,del}) {
                     <div className="invalid-feedback">El campo es obligatorio y solo permite letra y comas (,) para separar las categorias</div>
                 </div>
                 <button className={`btn btn-${id===undefined?"success": del===undefined?"primary":"danger"} mt-3`} onClick={(e)=>{enviar(e)}}><i className={`${id===undefined?"fa-solid fa-floppy-disk": del===undefined?"fa-solid fa-pen-to-square":"fa-solid fa-trash"}`}></i>{id===undefined?" Guardar": del===undefined?" Editar":" Eliminar"}</button>
-                <button className="btn btn-warning mt-3 ms-2" onClick={()=>{navigate("/juegos")}}><i class="fa-solid fa-ban"></i>{" "}Cancelar</button>
+                <button className="btn btn-warning mt-3 ms-2" onClick={()=>{navigate("/juegos")}}><i className="fa-solid fa-ban"></i>{" "}Cancelar</button>
             </form>
         </div>
     )

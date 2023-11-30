@@ -97,7 +97,6 @@ useEffect(()=>{
       let res= await axios.delete(api+"?id="+id)
       let datos= await res.data
       if(datos.status===1){
-        console.log("Algo salio mal")
         alert(datos.message)
         navigate("/celulares")
       }
@@ -189,7 +188,7 @@ useEffect(()=>{
     }
 }
   return (
-    <div>
+    <div className="container">
       <form className="need-validation" noValidate>
         {
           id!==undefined?
@@ -322,7 +321,7 @@ useEffect(()=>{
           className="btn btn-warning mt-3 ms-2"
           onClick={() => navigate("/celulares")}
         >
-          <i class="fa-solid fa-ban"></i>{" "}
+          <i className="fa-solid fa-ban"></i>{" "}
          Cancelar
         </button>
       </form>

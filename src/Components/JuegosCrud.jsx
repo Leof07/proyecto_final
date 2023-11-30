@@ -21,14 +21,14 @@ function JuegosCrud({api}) {
     }
 }
     return(
-        <div>
+        <div className="container">
             {
                 juegos===undefined?
                 <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
                 :
-                <Tabla lista={juegos}controlador="juegos" headers={["Id","Titulo","Descripción","Plataforma","Precio", "Categoria"]} ></Tabla>
+                <Tabla lista={juegos}controlador="juegos" titulo="Videojuegos" headers={["Id","Titulo","Descripción","Plataforma","Precio", "Categoria"]} ></Tabla>
             }
         </div>
     )
